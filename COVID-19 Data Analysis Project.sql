@@ -47,9 +47,31 @@ GROUP BY location
 ORDER BY total_Death_Count DESC;
 
 
+-- 5.
+-- Comparing daily death count, vaccinations, and cases in each country
+SELECT
+	cd.location,
+	population,
+	cd.date,
+	total_cases,
+	(total_cases/population)*100 AS Population_Infected_Percentage,
+	total_deaths,
+	people_vaccinated,
+	people_fully_vaccinated,
+	new_cases,
+	new_deaths,
+	new_vaccinations,
+	total_vaccinations
+FROM PortfolioProject..CovidDeaths$ AS cd
+LEFT JOIN CovidVaccinations$ AS cv
+ON cd.location = cv.location AND
+cd.date = cv.date
+WHERE cd.continent IS NOT NULL
+ORDER BY cd.location, cd.date;
+
 -- Continent Breakdown
 
--- 5.
+-- 6.
 -- Showing continent with highest deaths per population
 SELECT
 	continent,
@@ -59,7 +81,7 @@ WHERE continent IS NOT NULL
 GROUP BY continent
 ORDER BY Highest_Death_Count DESC;
 
--- 6.
+-- 7.
 -- Showing total death per continent
 WITH CTE AS (
 SELECT continent, location, MAX(CAST(total_deaths AS INT)) AS Total_deaths
@@ -75,7 +97,7 @@ ORDER BY Total_Deaths_Continent DESC;
 
 -- Global Stats
 
--- 7.
+-- 8.
 -- Showing new daily cases, new daily deaths, daily death percentage on a global scale
 SELECT
 	date,
@@ -87,7 +109,7 @@ WHERE continent IS NOT NULL
 GROUP BY date
 ORDER BY date;
 
--- 8.
+-- 9.
 -- Showing total global cases, deaths, and death percentage
 SELECT
 	SUM(new_cases) AS Total_Global_Cases,
@@ -96,7 +118,7 @@ SELECT
 FROM PortfolioProject..CovidDeaths$
 WHERE continent IS NOT NULL;
 
--- 9.
+-- 10.
 -- Comparing total population and population vaccinated
 SELECT
 	d.continent,
@@ -113,7 +135,7 @@ WHERE d.continent IS NOT NULL
 ORDER BY 2, 3;
 
 
--- 10.
+-- 11.
 -- Show percentage of vaccinated population for each country country 
 
 -- Method 1: Using CTE
@@ -170,7 +192,7 @@ SELECT *, (Rolling_Population_Vaccinated/Population)*100 AS Population_Vaccinate
 FROM PercentPopulationVaccinated
 ORDER BY Location, Date;
 
--- 11.
+-- 12.
 -- Creating View to store data for visualizations
 DROP VIEW IF EXISTS PercentPopulationVaccinated_View;
 CREATE VIEW PercentPopulationVaccinated_View AS
