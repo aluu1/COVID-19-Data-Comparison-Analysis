@@ -1,4 +1,4 @@
-# COVID-19-Data-Manipulation-and-Extraction
+# COVID-19-Data-Comparison-Analysis
 This is an exploratory data analysis on COVID-19 infection, vaccination, and death rate around the globe.
 
 Queries #4, #5, #7, #9 were used for Tableau data visualization.
