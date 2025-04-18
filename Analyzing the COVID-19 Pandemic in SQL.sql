@@ -12,7 +12,7 @@ WHERE location LIKE '%states%'
 	AND continent IS NOT NULL
 ORDER BY location, date;
 
--- 2.
+-- 2. 
 -- Looking at Total Cases vs Population
 -- Shows what percentage of population contracted COVID by country per day
 SELECT
